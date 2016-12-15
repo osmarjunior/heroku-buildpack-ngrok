@@ -17,4 +17,4 @@ ngrok_pid=$!
 trap "kill $ngrok_pid" SIGTERM
 trap "kill -9 $ngrok_pid; exit" SIGKILL
 
-eval "$@"
+eval "ruby -rwebrick -e'WEBrick::HTTPServer.new(:BindAddress => \"0.0.0.0\", :Port => ${port}, :MimeTypes => {\"rhtml\" => \"text/html\"}, :DocumentRoot => Dir.pwd).start'"
