@@ -33,5 +33,7 @@ echo "done"
 
 mkdir -p $BUILD_DIR/bin
 [ ! -f $BUILD_DIR/with_ngrok ]   && cp $OPT_DIR/with_ngrok $BUILD_DIR/bin
+[ ! -f $BUILD_DIR/index.rhtml ] && cp $OPT_DIR/index.rhtml $BUILD_DIR
 
 chmod +x $BUILD_DIR/bin/with_ngrok
+echo "installation finished"
