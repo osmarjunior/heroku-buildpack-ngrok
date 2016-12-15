@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-aux_port=${AUX_PORT:-9090}
+aux_port=${AUX_PORT:-7171}
 port=${1:-${PORT:-8080}}
 
 if [ -z "$NGROK_API_TOKEN" ]; then
@@ -14,9 +14,9 @@ echo "Starting ngrok with command \`${ngrok_cmd}\`"
 eval "$ngrok_cmd | tee ngrok.log &"
 ngrok_pid=$!
 
-# trap "kill $ngrok_pid" SIGTERM
-# trap "kill -9 $ngrok_pid; exit" SIGKILL
+trap "kill $ngrok_pid" SIGTERM
+trap "kill -9 $ngrok_pid; exit" SIGKILL
 
-# eval "ruby -rwebrick -e'WEBrick::HTTPServer.new(:BindAddress => \"0.0.0.0\", :Port => ${port}, :MimeTypes => {\"rhtml\" => \"text/html\"}, :DocumentRoot => Dir.pwd).start'"
+eval "ruby -rwebrick -e'WEBrick::HTTPServer.new(:BindAddress => \"0.0.0.0\", :Port => ${port}, :MimeTypes => {\"rhtml\" => \"text/html\"}, :DocumentRoot => Dir.pwd).start'"
 
 eval "$@"
